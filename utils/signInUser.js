@@ -7,6 +7,8 @@ export const signInUser = async (email, password) => {
     .signInWithEmailAndPassword(email, password)
     .then((userCredential) => {
       // Signed in
+
+      alert("User loggedin!!");
       return userCredential.user;
       // ...
     })

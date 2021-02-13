@@ -13,6 +13,7 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+import { useState } from "react";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -37,6 +38,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Register() {
   // Our custom hook to get context values
   const { loadingUser, user } = useUser();
+  const [formError, setFormError] = useState("");
 
   useEffect(() => {
     if (!loadingUser) {
@@ -58,21 +60,37 @@ export default function Register() {
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
+
           <Formik
             initialValues={{
               email: "",
               password: "",
+              username: "",
+              role: "",
             }}
             onSubmit={async (values) => {
+              setFormError("");
               console.log(values);
-              const { email, username, password, password2 } = values;
+              const { email, username, password, password2, role } = values;
               if (
                 email != "" &&
                 username != "" &&
                 password != "" &&
+                role != "" &&
                 password === password2
               ) {
-                await createUser(email, password, username);
+                await createUser(email, password, username, role);
+              } else if (username === "") {
+                setFormError(`please verify your username`);
+              } else if (email === "") {
+                setFormError(`please verify your email`);
+              } else if (role === "") {
+                setFormError(`please verify your role`);
+              } else if (password === "" || password !== password2) {
+                setFormError("please verify your password");
+              }
+              if (!user) {
+                setFormError(`please verify your cridentials`);
               }
             }}
           >
@@ -88,7 +106,7 @@ export default function Register() {
                       variant="outlined"
                       required
                       fullWidth
-                      label="user name"
+                      label="username"
                       autoFocus
                     />
                   </Grid>
@@ -102,6 +120,19 @@ export default function Register() {
                       required
                       fullWidth
                       label="Email"
+                      autoFocus
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      onChange={handleChange}
+                      type="text"
+                      autoComplete="fname"
+                      name="role"
+                      variant="outlined"
+                      required
+                      fullWidth
+                      label="Role"
                       autoFocus
                     />
                   </Grid>
@@ -129,6 +160,15 @@ export default function Register() {
                       autoComplete="lname"
                     />
                   </Grid>
+                </Grid>
+                <Grid item xs={12}>
+                  <Typography
+                    component="h1"
+                    variant="h5"
+                    style={{ color: "red !important" }}
+                  >
+                    {formError}
+                  </Typography>
                 </Grid>
                 <Button
                   type="submit"

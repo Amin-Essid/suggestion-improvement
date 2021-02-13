@@ -13,6 +13,7 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+import { useState } from "react";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -37,6 +38,7 @@ const useStyles = makeStyles((theme) => ({
 export default function LogIn() {
   // Our custom hook to get context values
   const { loadingUser, user } = useUser();
+  const [formError, setFormError] = useState("");
 
   useEffect(() => {
     if (!loadingUser) {
@@ -64,10 +66,18 @@ export default function LogIn() {
               password: "",
             }}
             onSubmit={async (values) => {
+              setFormError("");
               console.log(values);
               const { email, password } = values;
               if (email != "" && password != "") {
                 await signInUser(email, password);
+              } else if (email === "") {
+                setFormError(`please verify your email`);
+              } else if (password === "") {
+                setFormError(`please verify your password`);
+              }
+              if (!user) {
+                setFormError(`please verify your email and password`);
               }
             }}
           >
@@ -99,6 +109,15 @@ export default function LogIn() {
                       autoComplete="lname"
                     />
                   </Grid>
+                </Grid>
+                <Grid item xs={12}>
+                  <Typography
+                    component="h1"
+                    variant="h5"
+                    style={{ color: "red !important" }}
+                  >
+                    {formError}
+                  </Typography>
                 </Grid>
                 <Button
                   type="submit"

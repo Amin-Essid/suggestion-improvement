@@ -2,10 +2,10 @@ import firebase from "firebase/app";
 import "firebase/auth";
 import { verifyEmail } from "./verifyEmail";
 
-export const createUser = async (email, password) => {
+export const createUser = async (email, password, username, role) => {
   firebase
     .auth()
-    .createUserWithEmailAndPassword(email, password, username)
+    .createUserWithEmailAndPassword(email, password)
     .then(async (userCredential) => {
       // Signed in
       const user = userCredential.user;
@@ -14,7 +14,7 @@ export const createUser = async (email, password) => {
       await verifyEmail(user);
       console.log(email_verified);
       const db = firebase.firestore();
-      await db.collection("users").doc(user.uid).set({ username, email });
+      await db.collection("users").doc(user.uid).set({ username, email, role });
       alert("User created!!");
       return { status: true, user };
       // ...
