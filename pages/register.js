@@ -14,6 +14,8 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { useState } from "react";
+import { useRouter } from "next/router";
+import { default as StyledLink } from "@material-ui/core/Link";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -39,11 +41,20 @@ export default function Register() {
   // Our custom hook to get context values
   const { loadingUser, user } = useUser();
   const [formError, setFormError] = useState("");
+  const router = useRouter();
 
   useEffect(() => {
     if (!loadingUser) {
       // You know that the user is loaded: either logged in or out!
-      console.log(user);
+      console.log("user: " + user);
+      if (user) {
+        const email_verified = firebase.auth().currentUser.emailVerified;
+        if (email_verified) {
+          router.push("/");
+        } else {
+          router.push("/verification");
+        }
+      }
     }
     // You also have your firebase app initialized
     console.log(firebase);
@@ -179,6 +190,16 @@ export default function Register() {
                 >
                   Sign Up
                 </Button>
+                <Grid container>
+                  <Grid item xs>
+                    <Link href="/reset_password">Forgot password?</Link>
+                  </Grid>
+                  <Grid item>
+                    <Link href="/login">
+                      {"you already have an account? Sign In"}
+                    </Link>
+                  </Grid>
+                </Grid>
               </form>
             )}
           </Formik>

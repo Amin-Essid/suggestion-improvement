@@ -1,7 +1,7 @@
 import firebase from "firebase/app";
 import "firebase/auth";
 
-export const createUser = async () => {
+export const signOut = async () => {
   firebase
     .auth()
     .signOut()
@@ -9,6 +9,6 @@ export const createUser = async () => {
       // Sign-out successful.
     })
     .catch((error) => {
-      // An error happened.
+      alert(error.message);
     });
 };

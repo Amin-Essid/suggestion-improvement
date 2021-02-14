@@ -13,9 +13,7 @@ export const signInUser = async (email, password) => {
       // ...
     })
     .catch((error) => {
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      return { errorCode, errorMessage };
+      alert(error.message);
       // ..
     });
 };

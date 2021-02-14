@@ -9,6 +9,6 @@ export const verifyEmail = async (user) => {
       console.log("email verification sent");
     })
     .catch(function (error) {
-      // An error happened.
+      alert(error.message);
     });
 };

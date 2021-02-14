@@ -20,9 +20,7 @@ export const createUser = async (email, password, username, role) => {
       // ...
     })
     .catch((error) => {
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      return { status: true, errorCode, errorMessage };
+      alert(error.message);
       // ..
     });
 };
