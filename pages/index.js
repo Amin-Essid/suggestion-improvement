@@ -26,7 +26,7 @@ export default function Home() {
 
       <main>
         <Header />
-        {user ? <button onClick={() => signOut()}>Logout</button> : null}
+        <Container maxWidth="sm"></Container>
       </main>
     </div>
   );
