@@ -15,7 +15,7 @@ export const createUser = async (email, password, username, role) => {
       console.log(email_verified);
       const db = firebase.firestore();
       await db.collection("users").doc(user.uid).set({ username, email, role });
-      alert("User created!!");
+      // alert("User created!!");
       return { status: true, user };
       // ...
     })

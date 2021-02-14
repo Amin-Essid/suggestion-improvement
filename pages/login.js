@@ -15,7 +15,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { useState } from "react";
 import { useRouter } from "next/router";
-import { default as StyledLink } from "@material-ui/core/Link";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
