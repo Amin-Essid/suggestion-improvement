@@ -105,7 +105,7 @@ export default function ResetPassword() {
               color="primary"
               className={classes.submit}
             >
-              Log In
+              change password
             </Button>
           </form>
         )}
@@ -185,7 +185,7 @@ export default function ResetPassword() {
         <CssBaseline />
         <div className={classes.paper}>
           <Typography component="h1" variant="h5">
-            Sign in
+            Reset password
           </Typography>
           {layout}
         </div>
