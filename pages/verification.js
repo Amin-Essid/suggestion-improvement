@@ -81,7 +81,7 @@ export default function Verification() {
                 color="primary"
                 className={classes.submit}
                 onClick={async () => {
-                  await verifyEmail(user);
+                  await verifyEmail();
                   router.push("/");
                 }}
               >

@@ -8,6 +8,7 @@ import {
   Drawer,
   Link,
   MenuItem,
+  Paper,
 } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import React, { useState, useEffect } from "react";
@@ -17,12 +18,13 @@ import { useUser } from "../context/userContext";
 import { signOut } from "../utils/signOut";
 import { useRouter } from "next/router";
 
-export default function Suggestion() {
-  const { loadingUser, user } = useUser();
-
-  const router = useRouter();
-
-  useEffect(() => {});
-
-  return <></>;
+export default function Suggestion({ sug }) {
+  console.log(sug.title);
+  return (
+    <Paper>
+      <h2>{sug.title}</h2>
+      <p>{sug.author}</p>
+      {/* <p>{sug.createdAt.toDate()}</p> */}
+    </Paper>
+  );
 }
