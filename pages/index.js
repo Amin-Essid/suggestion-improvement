@@ -5,7 +5,6 @@ import { useUser } from "../context/userContext";
 import firebase from "../firebase/clientApp";
 import Header from "../components/header";
 import { Container, Paper } from "@material-ui/core";
-import { getAllSuggestions } from "../fetchData/getAllSuggestions";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import Suggestion from "../components/suggestion";
 import { Suggestions } from "../components/suggestions";
@@ -71,12 +70,24 @@ export default function Home() {
         <Container style={{ marginTop: "100px" }}>
           {suggestions &&
             suggestions.map((sug) => (
-              <Paper key={sug.id}>
-                <h2>{sug.title}</h2>
-                <p>{sug.department}</p>
-                <p>{sug.category}</p>
-                {/* <p>{sug.createdAt.toDate()}</p> */}
-              </Paper>
+              <Link href={`/suggestions/${sug.id}`}>
+                <Paper
+                  style={{
+                    padding: "10px",
+                    marginTop: "10px",
+                    cursor: "pointer",
+                  }}
+                  key={sug.id}
+                >
+                  <h2>{sug.title}</h2>
+                  <p>
+                    <span style={{ paddingRight: "10px" }}>
+                      {sug.department}
+                    </span>
+                    |<span style={{ paddingLeft: "10px" }}>{sug.category}</span>
+                  </p>
+                </Paper>
+              </Link>
             ))}
         </Container>
       </main>
