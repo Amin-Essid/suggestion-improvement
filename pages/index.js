@@ -70,24 +70,28 @@ export default function Home() {
         <Container style={{ marginTop: "100px" }}>
           {suggestions &&
             suggestions.map((sug) => (
-              <Link href={`/suggestions/${sug.id}`}>
-                <Paper
-                  style={{
-                    padding: "10px",
-                    marginTop: "10px",
-                    cursor: "pointer",
-                  }}
-                  key={sug.id}
-                >
-                  <h2>{sug.title}</h2>
-                  <p>
-                    <span style={{ paddingRight: "10px" }}>
-                      {sug.department}
-                    </span>
-                    |<span style={{ paddingLeft: "10px" }}>{sug.category}</span>
-                  </p>
-                </Paper>
-              </Link>
+              <div key={sug.id}>
+                <Link href={`/suggestions/${sug.id}`}>
+                  <Paper
+                    style={{
+                      padding: "10px",
+                      marginTop: "10px",
+                      cursor: "pointer",
+                    }}
+                  >
+                    <h2>{sug.title}</h2>
+                    <p>
+                      <span style={{ paddingRight: "10px" }}>
+                        {sug.department}
+                      </span>
+                      |
+                      <span style={{ paddingLeft: "10px" }}>
+                        {sug.category}
+                      </span>
+                    </p>
+                  </Paper>
+                </Link>
+              </div>
             ))}
         </Container>
       </main>
