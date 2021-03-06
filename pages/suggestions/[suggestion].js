@@ -31,9 +31,7 @@ export default function SSRPage({ data }) {
             <div style={{ display: "flex" }}>
               <div>
                 <span style={{ paddingRight: "10px" }}>{sug.department}</span>|
-                <span style={{ paddingLeft: "10px", cursor: "pointer" }}>
-                  {sug.category}
-                </span>
+                <span style={{ paddingLeft: "10px" }}>{sug.category}</span>
               </div>
               <Buttons sug={sug} sugId={suggestion} />
             </div>
