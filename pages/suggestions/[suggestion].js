@@ -1,11 +1,12 @@
 import Head from "next/head";
 import Link from "next/link";
 import { Container, Paper } from "@material-ui/core";
+import { Buttons } from "../../components/buttons";
 
 import { getSuggestion } from "../../fetchData/getSuggestion";
 
 export default function SSRPage({ data }) {
-  const { sug } = data;
+  const { sug, suggestion } = data;
   console.log(sug);
 
   return (
@@ -22,13 +23,20 @@ export default function SSRPage({ data }) {
               padding: "10px",
               marginTop: "10px",
             }}
-            key={sug.id}
           >
-            <h2>{sug.title}</h2>
-            <p>
-              <span style={{ paddingRight: "10px" }}>{sug.department}</span>|
-              <span style={{ paddingLeft: "10px" }}>{sug.category}</span>
-            </p>
+            <div>
+              <h2>{sug.title}</h2>
+            </div>
+
+            <div style={{ display: "flex" }}>
+              <div>
+                <span style={{ paddingRight: "10px" }}>{sug.department}</span>|
+                <span style={{ paddingLeft: "10px", cursor: "pointer" }}>
+                  {sug.category}
+                </span>
+              </div>
+              <Buttons sug={sug} sugId={suggestion} />
+            </div>
           </Paper>
         </Container>
       </main>
@@ -43,5 +51,5 @@ export const getServerSideProps = async ({ params }) => {
     return { notFound: true };
   }
   sug = JSON.parse(JSON.stringify(sug));
-  return { props: { data: { sug } } };
+  return { props: { data: { sug, suggestion } } };
 };

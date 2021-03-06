@@ -1,13 +1,16 @@
 import Head from "next/head";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import { useUser } from "../context/userContext";
 import firebase from "../firebase/clientApp";
 import Header from "../components/header";
 import { Container, Paper } from "@material-ui/core";
 import { useCollectionData } from "react-firebase-hooks/firestore";
-import Suggestion from "../components/suggestion";
-import { Suggestions } from "../components/suggestions";
+import EditIcon from "@material-ui/icons/Edit";
+import ThumbUpAltIcon from "@material-ui/icons/ThumbUpAlt";
+import DeleteIcon from "@material-ui/icons/Delete";
+import { deleteSuggestion } from "../utils/deleteSuggestion";
+import { useRouter } from "next/router";
+import { Buttons } from "../components/buttons";
 
 // export default function Home({ suggestions }) {
 //   const fknSug = suggestions.map((sug) => (
@@ -52,11 +55,13 @@ import { Suggestions } from "../components/suggestions";
 // };
 
 export default function Home() {
+  const router = useRouter();
   const db = firebase.firestore();
   const suggestionsRef = db.collection("posts");
   const query = suggestionsRef.orderBy("createdAt").limit(25);
 
   const [suggestions] = useCollectionData(query, { idField: "id" });
+  const { loadingUser, user } = useUser();
   console.log(suggestions);
   return (
     <div className="container">
@@ -68,29 +73,38 @@ export default function Home() {
       <main>
         <Header />
         <Container style={{ marginTop: "100px" }}>
+          {!suggestions && <div>LOADING ...</div>}
           {suggestions &&
             suggestions.map((sug) => (
               <div key={sug.id}>
-                <Link href={`/suggestions/${sug.id}`}>
-                  <Paper
-                    style={{
-                      padding: "10px",
-                      marginTop: "10px",
-                      cursor: "pointer",
-                    }}
-                  >
-                    <h2>{sug.title}</h2>
-                    <p>
+                <Paper
+                  style={{
+                    padding: "10px",
+                    marginTop: "10px",
+                  }}
+                >
+                  <Link href={`/suggestions/${sug.id}`}>
+                    <div
+                      style={{
+                        cursor: "pointer",
+                      }}
+                    >
+                      <h2>{sug.title}</h2>
+                    </div>
+                  </Link>
+                  <div style={{ display: "flex" }}>
+                    <div>
                       <span style={{ paddingRight: "10px" }}>
                         {sug.department}
                       </span>
                       |
-                      <span style={{ paddingLeft: "10px" }}>
+                      <span style={{ paddingLeft: "10px", cursor: "pointer" }}>
                         {sug.category}
                       </span>
-                    </p>
-                  </Paper>
-                </Link>
+                    </div>
+                    <Buttons sug={sug} sugId={sug.id} />
+                  </div>
+                </Paper>
               </div>
             ))}
         </Container>

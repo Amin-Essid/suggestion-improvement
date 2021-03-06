@@ -1,5 +1,5 @@
 import { Container } from "@material-ui/core";
-import Suggestion from "../components/suggestion";
+import Suggestion from "./suggestion";
 
 export const Suggestions = ({ suggestions }) => {
   console.log(suggestions);
