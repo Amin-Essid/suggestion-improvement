@@ -18,7 +18,7 @@ export default function Home() {
   const { loadingUser, user } = useUser();
   console.log(suggestions);
   return (
-    <div className="container">
+    <div>
       <Head>
         <title>Home</title>
         <link rel="icon" href="/favicon.ico" />

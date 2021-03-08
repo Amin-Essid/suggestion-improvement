@@ -4,20 +4,23 @@ import { Container, Paper } from "@material-ui/core";
 import { Buttons } from "../../components/buttons";
 
 import { getSuggestion } from "../../fetchData/getSuggestion";
-
+import { getUserData } from "../../fetchData/getUserData";
+import Header from "../../components/header";
+import { useUser } from "../../context/userContext";
 export default function SSRPage({ data }) {
-  const { sug, suggestion } = data;
+  const { sug, suggestion, userData } = data;
   console.log(sug);
-
+  const { loadingUser, user } = useUser();
   return (
-    <div className="container">
+    <div>
       <Head>
         <title>suggestion</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <main>
-        <Container>
+        <Header />
+        <Container style={{ marginTop: "100px" }}>
           <Paper
             style={{
               padding: "10px",
@@ -30,10 +33,23 @@ export default function SSRPage({ data }) {
 
             <div style={{ display: "flex" }}>
               <div>
-                <span style={{ paddingRight: "10px" }}>{sug.department}</span>|
-                <span style={{ paddingLeft: "10px" }}>{sug.category}</span>
+                <span
+                  style={{ paddingRight: "10px", textDecoration: "underline" }}
+                >
+                  {sug.department}
+                </span>
+                |
+                <span
+                  style={{ paddingLeft: "10px", textDecoration: "underline" }}
+                >
+                  {sug.category}
+                </span>
               </div>
-              <Buttons sug={sug} sugId={suggestion} />
+              <Buttons sug={sug} sugId={suggestion} ssr={true} />
+            </div>
+            <div>
+              <p>{sug.description}</p>
+              <p style={{ fontStyle: "italic" }}>{`by ${userData.username}`}</p>
             </div>
           </Paper>
         </Container>
@@ -49,5 +65,7 @@ export const getServerSideProps = async ({ params }) => {
     return { notFound: true };
   }
   sug = JSON.parse(JSON.stringify(sug));
-  return { props: { data: { sug, suggestion } } };
+  let userData = await getUserData(sug.author);
+  userData = JSON.parse(JSON.stringify(userData));
+  return { props: { data: { sug, suggestion, userData } } };
 };
