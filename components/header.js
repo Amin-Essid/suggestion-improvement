@@ -28,7 +28,7 @@ const headersData = [
   },
   {
     label: "FAQs",
-    href: "/FAQs",
+    href: "/",
   },
 ];
 
