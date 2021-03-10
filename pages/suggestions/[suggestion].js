@@ -47,7 +47,11 @@ export default function SSRPage({ data }) {
                 </span>
               </div>
               <Buttons sug={sug} sugId={suggestion} ssr={true} />
-              <div style={{ marginLeft: "auto" }}>{sug.upvotes}</div>
+              {user ? (
+                <div>{sug.upvotes}</div>
+              ) : (
+                <div style={{ marginLeft: "auto" }}>{sug.upvotes}</div>
+              )}
             </div>
             <div>
               <p>{sug.description}</p>
