@@ -9,7 +9,7 @@ import {
 } from "../utils/upvoteSuggestion";
 import { useRouter } from "next/router";
 
-export const Buttons = ({ sug, sugId, ssr }) => {
+export const Buttons = ({ sug, sugId, ssr, upvotes }) => {
   const router = useRouter();
   const { loadingUser, user } = useUser();
 
@@ -30,7 +30,7 @@ export const Buttons = ({ sug, sugId, ssr }) => {
       />
     );
   }
-  if (sug && sug.usersWhoLikedItIds.includes(user.uid)) {
+  if (sug && sug.usersWhoLikedItIds.includes(user?.uid)) {
     upvoteButton = (
       <ThumbUpAltIcon
         style={{ color: "blue" }}
@@ -39,7 +39,7 @@ export const Buttons = ({ sug, sugId, ssr }) => {
     );
   }
 
-  if (sug && sug.usersWhoLikedItIds.includes(user.uid) && ssr) {
+  if (sug && sug.usersWhoLikedItIds.includes(user?.uid) && ssr) {
     upvoteButton = (
       <ThumbUpAltIcon
         style={{ color: "blue" }}

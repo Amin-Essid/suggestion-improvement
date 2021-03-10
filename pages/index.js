@@ -57,6 +57,7 @@ export default function Home() {
                       </span>
                     </div>
                     <Buttons sug={sug} sugId={sug.id} />
+                    <div style={{ marginLeft: "auto" }}>{sug.upvotes}</div>
                   </div>
                 </Paper>
               </div>

@@ -2,6 +2,7 @@ import Head from "next/head";
 import Link from "next/link";
 import { Container, Paper } from "@material-ui/core";
 import { Buttons } from "../../components/buttons";
+import Comments from "../../components/Comments";
 
 import { getSuggestion } from "../../fetchData/getSuggestion";
 import { getUserData } from "../../fetchData/getUserData";
@@ -46,12 +47,17 @@ export default function SSRPage({ data }) {
                 </span>
               </div>
               <Buttons sug={sug} sugId={suggestion} ssr={true} />
+              <div style={{ marginLeft: "auto" }}>{sug.upvotes}</div>
             </div>
             <div>
               <p>{sug.description}</p>
-              <p style={{ fontStyle: "italic" }}>{`by ${userData.username}`}</p>
+              <p
+                style={{ fontStyle: "italic", fontSize: "13px" }}
+              >{`by ${userData.username}`}</p>
             </div>
           </Paper>
+          {/* {user && <CommentField suggestion={suggestion} />} */}
+          <Comments sug={sug} suggestion={suggestion} />
         </Container>
       </main>
     </div>
