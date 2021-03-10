@@ -2,12 +2,12 @@ import Head from "next/head";
 import Link from "next/link";
 import { Container, Paper } from "@material-ui/core";
 import { Buttons } from "../../components/buttons";
-import Comments from "../../components/Comments";
 
 import { getSuggestion } from "../../fetchData/getSuggestion";
 import { getUserData } from "../../fetchData/getUserData";
 import Header from "../../components/header";
 import { useUser } from "../../context/userContext";
+import Comments from "../../components/comments";
 export default function SSRPage({ data }) {
   const { sug, suggestion, userData } = data;
   console.log(sug);
