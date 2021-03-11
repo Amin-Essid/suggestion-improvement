@@ -15,11 +15,11 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { useState } from "react";
 import { useRouter } from "next/router";
-import { default as StyledLink } from "@material-ui/core/Link";
+import Header from "../components/header";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    marginTop: theme.spacing(8),
+    marginTop: theme.spacing(15),
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -64,6 +64,7 @@ export default function Register() {
       <Head>
         <title>Register</title>
       </Head>
+      <Header />
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <div className={classes.paper}>
