@@ -44,8 +44,6 @@ export default function LogIn() {
 
   useEffect(() => {
     if (!loadingUser) {
-      // You know that the user is loaded: either logged in or out!
-      console.log("user: " + user);
       if (user) {
         const email_verified = firebase.auth().currentUser.emailVerified;
         if (email_verified) {
@@ -75,7 +73,6 @@ export default function LogIn() {
             }}
             onSubmit={async (values) => {
               setFormError("");
-              console.log(values);
               const { email, password } = values;
               if (email != "" && password != "") {
                 await signInUser(email, password);

@@ -47,8 +47,6 @@ export default function EditSuggestion({ data }) {
   useEffect(() => {
     if (!loadingUser) {
       // You know that the user is loaded: either logged in or out!
-      console.log("user: " + JSON.stringify(user));
-      console.log(user.uid);
       if (user) {
         const email_verified = firebase.auth().currentUser.emailVerified;
         if (!email_verified) {
@@ -81,7 +79,6 @@ export default function EditSuggestion({ data }) {
             }}
             onSubmit={async (values) => {
               setFormError("");
-              console.log(values);
               const { title, description, department, category } = values;
               if (
                 title != "" &&

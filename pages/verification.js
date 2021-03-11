@@ -42,8 +42,6 @@ export default function Verification() {
   const classes = useStyles();
   useEffect(() => {
     if (!loadingUser) {
-      // You know that the user is loaded: either logged in or out!
-      console.log("user: " + user);
       if (user) {
         const email_verified = firebase.auth().currentUser.emailVerified;
         if (email_verified) {
@@ -53,8 +51,6 @@ export default function Verification() {
         router.push("/login");
       }
     }
-    // You also have your firebase app initialized
-    console.log(firebase);
   }, [loadingUser, user]);
 
   return (

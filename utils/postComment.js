@@ -10,7 +10,6 @@ export const postComment = async (comment, author, suggestion) => {
     author,
     createdAt: serverTimestamp(),
   });
-  console.log(docRef.id);
 
   await suggestionRef.update({
     commentsIds: firebase.firestore.FieldValue.arrayUnion(docRef.id),

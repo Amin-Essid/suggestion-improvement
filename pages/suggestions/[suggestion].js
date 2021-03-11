@@ -10,7 +10,6 @@ import { useUser } from "../../context/userContext";
 import Comments from "../../components/comments";
 export default function SSRPage({ data }) {
   const { sug, suggestion, userData } = data;
-  console.log(sug);
   const { loadingUser, user } = useUser();
   return (
     <div>
@@ -48,9 +47,9 @@ export default function SSRPage({ data }) {
               </div>
               <Buttons sug={sug} sugId={suggestion} ssr={true} />
               {user ? (
-                <div>{sug.upvotes}</div>
+                <div>{`⇫${sug.upvotes}`}</div>
               ) : (
-                <div style={{ marginLeft: "auto" }}>{sug.upvotes}</div>
+                <div style={{ marginLeft: "auto" }}>{`⇫${sug.upvotes}`}</div>
               )}
             </div>
             <div>

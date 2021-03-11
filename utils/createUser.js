@@ -12,7 +12,6 @@ export const createUser = async (email, password, username, role) => {
 
       const email_verified = firebase.auth().currentUser.emailVerified;
       await verifyEmail(user);
-      console.log(email_verified);
       const db = firebase.firestore();
       const { serverTimestamp } = firebase.firestore.FieldValue;
       await db.collection("users").doc(user.uid).set({

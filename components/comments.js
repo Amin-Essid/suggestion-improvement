@@ -34,7 +34,6 @@ export default function Comments({ sug, suggestion }) {
   };
   const [comments, setComments] = useState([]);
   let commentsIds = sug?.commentsIds;
-  console.log(commentsIds);
   const commentsRef = firebase.firestore().collection("comments");
   const getComments = async (commentsIds) => {
     let comments = [];
@@ -56,7 +55,6 @@ export default function Comments({ sug, suggestion }) {
     getData();
   }, [commentsIds]);
 
-  console.log(comments);
   let commentsDivs = comments.map((com, id) => {
     return (
       <div key={id}>
@@ -90,7 +88,6 @@ export default function Comments({ sug, suggestion }) {
             }}
             onSubmit={async (values, { resetForm }) => {
               setFormError("");
-              console.log(values);
               const { comment } = values;
               if (comment != "") {
                 await postComment(comment, user.uid, suggestion);

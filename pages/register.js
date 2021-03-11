@@ -46,7 +46,7 @@ export default function Register() {
   useEffect(() => {
     if (!loadingUser) {
       // You know that the user is loaded: either logged in or out!
-      console.log("user: " + user);
+
       if (user) {
         const email_verified = firebase.auth().currentUser.emailVerified;
         if (email_verified) {
@@ -57,7 +57,6 @@ export default function Register() {
       }
     }
     // You also have your firebase app initialized
-    console.log(firebase);
   }, [loadingUser, user]);
   const classes = useStyles();
   return (
@@ -81,7 +80,6 @@ export default function Register() {
             }}
             onSubmit={async (values) => {
               setFormError("");
-              console.log(values);
               const { email, username, password, password2, role } = values;
               if (
                 email != "" &&

@@ -51,7 +51,6 @@ export default function ResetPassword() {
         }}
         onSubmit={async (values) => {
           setFormError("");
-          console.log(values);
           const { password2, password } = values;
           if (password != "" && password === password2) {
             await firebase.auth().currentUser.updatePassword(password);
@@ -119,7 +118,6 @@ export default function ResetPassword() {
         }}
         onSubmit={async (values) => {
           setFormError("");
-          console.log(values);
           const { email } = values;
           if (email != "") {
             await firebase.auth().sendPasswordResetEmail(email);
@@ -171,8 +169,6 @@ export default function ResetPassword() {
 
   useEffect(() => {
     if (!loadingUser) {
-      // You know that the user is loaded: either logged in or out!
-      console.log("user: " + user);
     }
   }, [loadingUser, user]);
   const classes = useStyles();

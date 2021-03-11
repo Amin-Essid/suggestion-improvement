@@ -16,7 +16,6 @@ export default function Home() {
 
   const [suggestions] = useCollectionData(query, { idField: "id" });
   const { loadingUser, user } = useUser();
-  console.log(suggestions);
   return (
     <div>
       <Head>
@@ -58,9 +57,11 @@ export default function Home() {
                     </div>
                     <Buttons sug={sug} sugId={sug.id} />
                     {user ? (
-                      <div>{sug.upvotes}</div>
+                      <div>{`⇫${sug.upvotes}`}</div>
                     ) : (
-                      <div style={{ marginLeft: "auto" }}>{sug.upvotes}</div>
+                      <div
+                        style={{ marginLeft: "auto" }}
+                      >{`⇫${sug.upvotes}`}</div>
                     )}
                   </div>
                 </Paper>
