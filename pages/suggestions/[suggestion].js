@@ -11,6 +11,8 @@ import Comments from "../../components/comments";
 export default function SSRPage({ data }) {
   const { sug, suggestion, userData } = data;
   const { loadingUser, user } = useUser();
+  let date = new Date(sug.createdAt.seconds * 1000).toDateString();
+  console.log(date);
   return (
     <div>
       <Head>
@@ -56,7 +58,7 @@ export default function SSRPage({ data }) {
               <p>{sug.description}</p>
               <p
                 style={{ fontStyle: "italic", fontSize: "13px" }}
-              >{`by ${userData.username}`}</p>
+              >{`Created on ${date} by ${userData.username}`}</p>
             </div>
           </Paper>
           {/* {user && <CommentField suggestion={suggestion} />} */}

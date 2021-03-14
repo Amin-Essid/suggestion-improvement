@@ -15,13 +15,19 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { useState } from "react";
 import { useRouter } from "next/router";
+import Header from "../components/header";
+import Select from "@material-ui/core/Select";
+import FormControl from "@material-ui/core/FormControl";
+import MenuItem from "@material-ui/core/MenuItem";
+import InputLabel from "@material-ui/core/InputLabel";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    marginTop: theme.spacing(8),
+    marginTop: theme.spacing(15),
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
+    flexGrow: 1,
   },
   avatar: {
     margin: theme.spacing(1),
@@ -61,11 +67,25 @@ export default function CreateSuggestion() {
       <Head>
         <title>Post Suggestion</title>
       </Head>
-      <Container component="main" maxWidth="xs">
+      <Header />
+      <Container component="main" maxWidth="md">
         <CssBaseline />
         <div className={classes.paper}>
           <Typography component="h1" variant="h5">
             Post Suggestion
+          </Typography>
+
+          <Typography
+            style={{ marginTop: "20px !important" }}
+            component="p"
+            variant="subtitle2"
+          >
+            Your ideas and suggestions can improve our products and processes.
+            Thank you for support.
+          </Typography>
+
+          <Typography component="p" variant="subtitle2">
+            Best idea providers will receive a bonus.
           </Typography>
 
           <Formik
@@ -102,10 +122,10 @@ export default function CreateSuggestion() {
               }
             }}
           >
-            {({ handleChange, handleSubmit }) => (
+            {({ handleChange, handleSubmit, setFieldValue }) => (
               <form onSubmit={handleSubmit} className={classes.form} noValidate>
                 <Grid container spacing={2}>
-                  <Grid item xs={12}>
+                  <Grid item md={12} xs={12}>
                     <TextField
                       onChange={handleChange}
                       type="text"
@@ -146,6 +166,28 @@ export default function CreateSuggestion() {
                       label="Department"
                       autoFocus
                     />
+                    {/* <FormControl
+                      variant="filled"
+                      className={classes.formControl}
+                    >
+                      <InputLabel htmlFor="filled-age-native-simple">
+                        Age
+                      </InputLabel>
+                      <Select
+                        native
+                        value={""}
+                        onChange={handleChange}
+                        inputProps={{
+                          name: "age",
+                          id: "filled-age-native-simple",
+                        }}
+                      >
+                        <option aria-label="None" value="" />
+                        <option value={10}>Ten</option>
+                        <option value={20}>Twenty</option>
+                        <option value={30}>Thirty</option>
+                      </Select>
+                    </FormControl> */}
                   </Grid>
                   <Grid item xs={12}>
                     <TextField

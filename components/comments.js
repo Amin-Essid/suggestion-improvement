@@ -28,6 +28,7 @@ export default function Comments({ sug, suggestion }) {
   const classes = useStyles();
   const { loadingUser, user } = useUser();
   const [formError, setFormError] = useState("");
+  const [load, setLoad] = useState(false);
   const router = useRouter();
   const refreshData = () => {
     router.replace(router.asPath);
@@ -50,12 +51,14 @@ export default function Comments({ sug, suggestion }) {
   useEffect(() => {
     const getData = async () => {
       let newComments = await getComments(commentsIds);
+      setLoad(true);
       setComments(newComments.reverse());
     };
     getData();
   }, [commentsIds]);
 
   let commentsDivs = comments.map((com, id) => {
+    let date = new Date(com.createdAt.seconds * 1000).toDateString();
     return (
       <div key={id}>
         <Paper
@@ -67,7 +70,7 @@ export default function Comments({ sug, suggestion }) {
           <p>{com.comment}</p>
           <p
             style={{ fontStyle: "italic", fontSize: "13px" }}
-          >{`by ${com.author}`}</p>
+          >{`Created on ${date} by ${com.author}`}</p>
         </Paper>
       </div>
     );
@@ -130,7 +133,7 @@ export default function Comments({ sug, suggestion }) {
       )}
       <div>
         <h2>Comments:</h2>
-        {commentsDivs}
+        {load ? commentsDivs : <div>LOADING...</div>}
       </div>
     </>
   );

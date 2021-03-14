@@ -154,9 +154,15 @@ export default function Header() {
   };
 
   const mainLogo = (
-    <Typography variant="h6" component="h1" className={logo}>
-      Improvement
-    </Typography>
+    <Link
+      color="inherit"
+      style={{ textDecoration: "none", cursor: "pointer" }}
+      onClick={() => router.push("/")}
+    >
+      <Typography variant="h6" component="h1" className={logo}>
+        Improvement
+      </Typography>
+    </Link>
   );
 
   const getMenuButtons = () => {

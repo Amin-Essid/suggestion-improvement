@@ -8,6 +8,7 @@ import {
   RemoveUpvoteSuggestion,
 } from "../utils/upvoteSuggestion";
 import { useRouter } from "next/router";
+import EjectIcon from "@material-ui/icons/Eject";
 
 export const Buttons = ({ sug, sugId, ssr, upvotes }) => {
   const router = useRouter();
@@ -18,11 +19,11 @@ export const Buttons = ({ sug, sugId, ssr, upvotes }) => {
   };
 
   let upvoteButton = (
-    <ThumbUpAltIcon onClick={() => upvoteSuggestion(sugId, user.uid)} />
+    <EjectIcon onClick={() => upvoteSuggestion(sugId, user.uid)} />
   );
   if (sug && ssr) {
     upvoteButton = (
-      <ThumbUpAltIcon
+      <EjectIcon
         onClick={async () => {
           await upvoteSuggestion(sugId, user.uid);
           refreshData();
@@ -32,7 +33,7 @@ export const Buttons = ({ sug, sugId, ssr, upvotes }) => {
   }
   if (sug && sug.usersWhoLikedItIds.includes(user?.uid)) {
     upvoteButton = (
-      <ThumbUpAltIcon
+      <EjectIcon
         style={{ color: "blue" }}
         onClick={() => RemoveUpvoteSuggestion(sugId, user.uid)}
       />
@@ -41,7 +42,7 @@ export const Buttons = ({ sug, sugId, ssr, upvotes }) => {
 
   if (sug && sug.usersWhoLikedItIds.includes(user?.uid) && ssr) {
     upvoteButton = (
-      <ThumbUpAltIcon
+      <EjectIcon
         style={{ color: "blue" }}
         onClick={async () => {
           await RemoveUpvoteSuggestion(sugId, user.uid);
