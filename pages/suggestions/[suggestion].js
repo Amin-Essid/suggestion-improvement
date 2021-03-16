@@ -8,7 +8,7 @@ import { getUserData } from "../../fetchData/getUserData";
 import Header from "../../components/header";
 import { useUser } from "../../context/userContext";
 import Comments from "../../components/comments";
-import Footer from "../../components/Footer";
+import Footer from "../../components/footer";
 
 export default function SSRPage({ data }) {
   const { sug, suggestion, userData } = data;

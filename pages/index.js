@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useUser } from "../context/userContext";
 import firebase from "../firebase/clientApp";
 import Header from "../components/header";
-import Footer from "../components/Footer";
+import Footer from "../components/footer";
 import { Container, Paper } from "@material-ui/core";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import { useRouter } from "next/router";
