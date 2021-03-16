@@ -16,10 +16,7 @@ import Container from "@material-ui/core/Container";
 import { useState } from "react";
 import { useRouter } from "next/router";
 import Header from "../components/header";
-import Select from "@material-ui/core/Select";
-import FormControl from "@material-ui/core/FormControl";
-import MenuItem from "@material-ui/core/MenuItem";
-import InputLabel from "@material-ui/core/InputLabel";
+import { Field } from "formik";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -39,6 +36,13 @@ const useStyles = makeStyles((theme) => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
+  },
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 200,
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2),
   },
 }));
 
@@ -94,15 +98,25 @@ export default function CreateSuggestion() {
               description: "",
               department: "",
               category: "",
+              toggle: false,
             }}
             onSubmit={async (values) => {
               setFormError("");
-              const { title, description, department, category } = values;
+              const {
+                title,
+                description,
+                department,
+                category,
+                toggle,
+              } = values;
+
+              console.log(values);
               if (
                 title != "" &&
                 description != "" &&
                 department != "" &&
-                category != ""
+                category != "" &&
+                toggle === true
               ) {
                 await postSuggestion(
                   title,
@@ -116,13 +130,14 @@ export default function CreateSuggestion() {
                 title === "" ||
                 description === "" ||
                 department === "" ||
-                category === ""
+                category === "" ||
+                toggle === false
               ) {
                 setFormError(`please fill in all the fields`);
               }
             }}
           >
-            {({ handleChange, handleSubmit, setFieldValue }) => (
+            {({ handleChange, handleSubmit, setFieldValue, values }) => (
               <form onSubmit={handleSubmit} className={classes.form} noValidate>
                 <Grid container spacing={2}>
                   <Grid item md={12} xs={12}>
@@ -151,56 +166,39 @@ export default function CreateSuggestion() {
                       required
                       fullWidth
                       label="Description"
-                      autoFocus
                     />
                   </Grid>
                   <Grid item xs={12}>
-                    <TextField
-                      onChange={handleChange}
-                      type="text"
-                      autoComplete="fname"
-                      name="department"
-                      variant="outlined"
-                      required
-                      fullWidth
-                      label="Department"
-                      autoFocus
-                    />
-                    {/* <FormControl
-                      variant="filled"
-                      className={classes.formControl}
-                    >
-                      <InputLabel htmlFor="filled-age-native-simple">
-                        Age
-                      </InputLabel>
-                      <Select
-                        native
-                        value={""}
-                        onChange={handleChange}
-                        inputProps={{
-                          name: "age",
-                          id: "filled-age-native-simple",
-                        }}
-                      >
-                        <option aria-label="None" value="" />
-                        <option value={10}>Ten</option>
-                        <option value={20}>Twenty</option>
-                        <option value={30}>Thirty</option>
-                      </Select>
-                    </FormControl> */}
+                    <Field className="select-css" as="select" name="department">
+                      <option value="" disabled>
+                        Departement
+                      </option>
+                      <option value="Purchasing">Purchasing</option>
+                      <option value="Sale">Sale</option>
+                      <option value="Production">Production</option>
+                      <option value="Customer service">Customer service</option>
+                    </Field>
                   </Grid>
                   <Grid item xs={12}>
-                    <TextField
-                      onChange={handleChange}
-                      type="text"
-                      autoComplete="fname"
-                      name="category"
-                      variant="outlined"
-                      required
-                      fullWidth
-                      label="Category"
-                      autoFocus
-                    />
+                    <Field className="select-css" as="select" name="category">
+                      <option value="" disabled>
+                        Category
+                      </option>
+                      <option value="Process improvement">
+                        Process improvement
+                      </option>
+                      <option value="Product improvement">
+                        Product improvement
+                      </option>
+                      <option value="New idea">New idea</option>
+                      <option value="Other">Other</option>
+                    </Field>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <label>
+                      <Field type="checkbox" name="toggle" />I accept the rules
+                      and have read the FAQ
+                    </label>
                   </Grid>
                 </Grid>
                 <Grid item xs={12}>
