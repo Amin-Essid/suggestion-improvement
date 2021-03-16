@@ -8,13 +8,15 @@ import { getUserData } from "../../fetchData/getUserData";
 import Header from "../../components/header";
 import { useUser } from "../../context/userContext";
 import Comments from "../../components/comments";
+import Footer from "../../components/Footer";
+
 export default function SSRPage({ data }) {
   const { sug, suggestion, userData } = data;
   const { loadingUser, user } = useUser();
   let date = new Date(sug.createdAt.seconds * 1000).toDateString();
   console.log(date);
   return (
-    <div>
+    <>
       <Head>
         <title>suggestion</title>
         <link rel="icon" href="/favicon.ico" />
@@ -65,7 +67,8 @@ export default function SSRPage({ data }) {
           <Comments sug={sug} suggestion={suggestion} />
         </Container>
       </main>
-    </div>
+      <Footer />
+    </>
   );
 }
 

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useUser } from "../context/userContext";
 import firebase from "../firebase/clientApp";
 import Header from "../components/header";
+import Footer from "../components/Footer";
 import { Container, Paper } from "@material-ui/core";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import { useRouter } from "next/router";
@@ -12,7 +13,7 @@ export default function Home() {
   const router = useRouter();
   const db = firebase.firestore();
   const suggestionsRef = db.collection("posts");
-  const query = suggestionsRef.orderBy("createdAt").limit(25);
+  const query = suggestionsRef.orderBy("createdAt", "desc").limit(25);
 
   const [suggestions] = useCollectionData(query, { idField: "id" });
   const { loadingUser, user } = useUser();
@@ -69,6 +70,7 @@ export default function Home() {
             ))}
         </Container>
       </main>
+      <Footer />
     </div>
   );
 }
