@@ -1,5 +1,3 @@
-import BottomNavigation from "@material-ui/core/BottomNavigation";
-
 export default function Footer() {
   return (
     <div className="footer">
