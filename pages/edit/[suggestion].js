@@ -16,6 +16,7 @@ import Container from "@material-ui/core/Container";
 import { useState } from "react";
 import { useRouter } from "next/router";
 import { getSuggestion } from "../../fetchData/getSuggestion";
+import { Field } from "formik";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -23,6 +24,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
+    flexGrow: 1,
   },
   avatar: {
     margin: theme.spacing(1),
@@ -63,7 +65,7 @@ export default function EditSuggestion({ data }) {
       <Head>
         <title>Post Suggestion</title>
       </Head>
-      <Container component="main" maxWidth="xs">
+      <Container component="main" maxWidth="md">
         <CssBaseline />
         <div className={classes.paper}>
           <Typography component="h1" variant="h5">
@@ -74,17 +76,27 @@ export default function EditSuggestion({ data }) {
             initialValues={{
               title: sug.title,
               description: sug.description,
-              department: sug.department,
-              category: sug.category,
+              department: "",
+              category: "",
+              toggle: false,
             }}
             onSubmit={async (values) => {
               setFormError("");
-              const { title, description, department, category } = values;
+              const {
+                title,
+                description,
+                department,
+                category,
+                toggle,
+              } = values;
+
+              console.log(values);
               if (
                 title != "" &&
                 description != "" &&
                 department != "" &&
-                category != ""
+                category != "" &&
+                toggle === true
               ) {
                 await editSuggestion(
                   suggestion,
@@ -98,16 +110,17 @@ export default function EditSuggestion({ data }) {
                 title === "" ||
                 description === "" ||
                 department === "" ||
-                category === ""
+                category === "" ||
+                toggle === false
               ) {
                 setFormError(`please fill in all the fields`);
               }
             }}
           >
-            {({ handleChange, handleSubmit }) => (
+            {({ handleChange, handleSubmit, setFieldValue, values }) => (
               <form onSubmit={handleSubmit} className={classes.form} noValidate>
                 <Grid container spacing={2}>
-                  <Grid item xs={12}>
+                  <Grid item md={12} xs={12}>
                     <TextField
                       onChange={handleChange}
                       type="text"
@@ -134,37 +147,40 @@ export default function EditSuggestion({ data }) {
                       required
                       fullWidth
                       label="Description"
-                      autoFocus
                       defaultValue={sug.description}
                     />
                   </Grid>
                   <Grid item xs={12}>
-                    <TextField
-                      onChange={handleChange}
-                      type="text"
-                      autoComplete="fname"
-                      name="department"
-                      variant="outlined"
-                      required
-                      fullWidth
-                      label="Department"
-                      autoFocus
-                      defaultValue={sug.department}
-                    />
+                    <Field className="select-css" as="select" name="department">
+                      <option value="" disabled>
+                        Departement
+                      </option>
+                      <option value="Purchasing">Purchasing</option>
+                      <option value="Sale">Sale</option>
+                      <option value="Production">Production</option>
+                      <option value="Customer service">Customer service</option>
+                    </Field>
                   </Grid>
                   <Grid item xs={12}>
-                    <TextField
-                      onChange={handleChange}
-                      type="text"
-                      autoComplete="fname"
-                      name="category"
-                      variant="outlined"
-                      required
-                      fullWidth
-                      label="Category"
-                      autoFocus
-                      defaultValue={sug.category}
-                    />
+                    <Field className="select-css" as="select" name="category">
+                      <option value="" disabled>
+                        Category
+                      </option>
+                      <option value="Process improvement">
+                        Process improvement
+                      </option>
+                      <option value="Product improvement">
+                        Product improvement
+                      </option>
+                      <option value="New idea">New idea</option>
+                      <option value="Other">Other</option>
+                    </Field>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <label>
+                      <Field type="checkbox" name="toggle" />I accept the rules
+                      and have read the FAQ
+                    </label>
                   </Grid>
                 </Grid>
                 <Grid item xs={12}>
@@ -203,3 +219,122 @@ export const getServerSideProps = async ({ params }) => {
   sug = JSON.parse(JSON.stringify(sug));
   return { props: { data: { sug, suggestion } } };
 };
+
+// <Formik
+// initialValues={{
+//   title: sug.title,
+//   description: sug.description,
+//   department: sug.department,
+//   category: sug.category,
+// }}
+// onSubmit={async (values) => {
+//   setFormError("");
+//   const { title, description, department, category } = values;
+//   if (
+//     title != "" &&
+//     description != "" &&
+//     department != "" &&
+//     category != ""
+//   ) {
+//     await editSuggestion(
+//       suggestion,
+//       title,
+//       description,
+//       department,
+//       category
+//     );
+//     router.push("/");
+//   } else if (
+//     title === "" ||
+//     description === "" ||
+//     department === "" ||
+//     category === ""
+//   ) {
+//     setFormError(`please fill in all the fields`);
+//   }
+// }}
+// >
+// {({ handleChange, handleSubmit }) => (
+//   <form onSubmit={handleSubmit} className={classes.form} noValidate>
+//     <Grid container spacing={2}>
+//       <Grid item xs={12}>
+//         <TextField
+//           onChange={handleChange}
+//           type="text"
+//           autoComplete="fname"
+//           name="title"
+//           variant="outlined"
+//           required
+//           fullWidth
+//           label="Title"
+//           autoFocus
+//           defaultValue={sug.title}
+//         />
+//       </Grid>
+//       <Grid item xs={12}>
+//         <TextField
+//           onChange={handleChange}
+//           type="text"
+//           multiline
+//           rows={4}
+//           rowsMax={20}
+//           autoComplete="fname"
+//           name="description"
+//           variant="outlined"
+//           required
+//           fullWidth
+//           label="Description"
+//           autoFocus
+//           defaultValue={sug.description}
+//         />
+//       </Grid>
+//       <Grid item xs={12}>
+//         <TextField
+//           onChange={handleChange}
+//           type="text"
+//           autoComplete="fname"
+//           name="department"
+//           variant="outlined"
+//           required
+//           fullWidth
+//           label="Department"
+//           autoFocus
+//           defaultValue={sug.department}
+//         />
+//       </Grid>
+//       <Grid item xs={12}>
+//         <TextField
+//           onChange={handleChange}
+//           type="text"
+//           autoComplete="fname"
+//           name="category"
+//           variant="outlined"
+//           required
+//           fullWidth
+//           label="Category"
+//           autoFocus
+//           defaultValue={sug.category}
+//         />
+//       </Grid>
+//     </Grid>
+//     <Grid item xs={12}>
+//       <Typography
+//         component="h1"
+//         variant="h5"
+//         style={{ color: "red !important" }}
+//       >
+//         {formError}
+//       </Typography>
+//     </Grid>
+//     <Button
+//       type="submit"
+//       fullWidth
+//       variant="contained"
+//       color="primary"
+//       className={classes.submit}
+//     >
+//       Post
+//     </Button>
+//   </form>
+// )}
+// </Formik>
