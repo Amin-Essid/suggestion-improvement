@@ -5,6 +5,9 @@ import { useUser } from "../context/userContext";
 import firebase from "firebase/app";
 import "firebase/auth";
 import { postSuggestion } from "../utils/postSuggestion";
+// ********************************************************************
+// import { addImageUrl } from "../utils/addImageUrl";
+// ********************************************************************
 import { Formik } from "formik";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -51,6 +54,9 @@ export default function CreateSuggestion() {
   const { loadingUser, user } = useUser();
   const [formError, setFormError] = useState("");
   const router = useRouter();
+  // ****************************
+  const storageRef = firebase.storage().ref();
+  // ****************************
 
   useEffect(() => {
     if (!loadingUser) {
@@ -99,6 +105,11 @@ export default function CreateSuggestion() {
               department: "",
               category: "",
               toggle: false,
+              // ****************************
+              imageOne: null,
+              imageTwo: null,
+              imageThree: null,
+              // ****************************
             }}
             onSubmit={async (values) => {
               setFormError("");
@@ -108,6 +119,11 @@ export default function CreateSuggestion() {
                 department,
                 category,
                 toggle,
+                // ****************************
+                imageOne,
+                imageTwo,
+                imageThree,
+                // ****************************
               } = values;
 
               console.log(values);
@@ -118,12 +134,58 @@ export default function CreateSuggestion() {
                 category != "" &&
                 toggle === true
               ) {
+                // *************************************
+                let urlsArray = [];
+                if (imageOne) {
+                  console.log(imageOne);
+                  var imageOneRef = storageRef.child(imageOne.name);
+                  console.log(imageOneRef.fullPath);
+                  await imageOneRef.put(imageOne).then(async (snapshot) => {
+                    console.log("Uploaded img1");
+                    await snapshot.ref
+                      .getDownloadURL()
+                      .then(function (downloadURL) {
+                        console.log("File available at", downloadURL);
+                        urlsArray.push(downloadURL);
+                      });
+                  });
+                }
+                if (imageTwo) {
+                  console.log(imageTwo);
+                  var imageTwoRef = storageRef.child(imageTwo.name);
+                  console.log(imageTwoRef.fullPath);
+                  await imageTwoRef.put(imageTwo).then(async (snapshot) => {
+                    console.log("Uploaded img2");
+                    await snapshot.ref
+                      .getDownloadURL()
+                      .then(function (downloadURL) {
+                        console.log("File available at", downloadURL);
+                        urlsArray.push(downloadURL);
+                      });
+                  });
+                }
+                if (imageThree) {
+                  console.log(imageThree);
+                  var imageThreeRef = storageRef.child(imageThree.name);
+                  console.log(imageThreeRef.fullPath);
+                  await imageThreeRef.put(imageThree).then(async (snapshot) => {
+                    console.log("Uploaded img3");
+                    await snapshot.ref
+                      .getDownloadURL()
+                      .then(function (downloadURL) {
+                        console.log("File available at", downloadURL);
+                        urlsArray.push(downloadURL);
+                      });
+                  });
+                }
+                // **************************************************
                 await postSuggestion(
                   title,
                   description,
                   department,
                   category,
-                  user.uid
+                  user.uid,
+                  urlsArray
                 );
                 router.push("/");
               } else if (
@@ -194,6 +256,49 @@ export default function CreateSuggestion() {
                       <option value="Other">Other</option>
                     </Field>
                   </Grid>
+                  {/* *********************************************** */}
+                  <Grid item xs={12}>
+                    <p>
+                      you can upload multiple images to make your suggestion
+                      clearer:
+                    </p>
+                    <input
+                      id="imageOne"
+                      name="imageOne"
+                      type="file"
+                      onChange={(event) => {
+                        setFieldValue("imageOne", event.currentTarget.files[0]);
+                      }}
+                    />
+                    {values.imageOne ? (
+                      <input
+                        id="imageTwo"
+                        name="imageTwo"
+                        type="file"
+                        onChange={(event) => {
+                          setFieldValue(
+                            "imageTwo",
+                            event.currentTarget.files[0]
+                          );
+                        }}
+                      />
+                    ) : null}
+                    {values.imageTwo ? (
+                      <input
+                        id="imageThree"
+                        name="imageThree"
+                        type="file"
+                        onChange={(event) => {
+                          setFieldValue(
+                            "imageThree",
+                            event.currentTarget.files[0]
+                          );
+                        }}
+                      />
+                    ) : null}
+                    <br />
+                  </Grid>
+                  {/* *********************************************** */}
                   <Grid item xs={12}>
                     <label>
                       <Field type="checkbox" name="toggle" />I accept the rules
@@ -210,6 +315,7 @@ export default function CreateSuggestion() {
                     {formError}
                   </Typography>
                 </Grid>
+
                 <Button
                   type="submit"
                   fullWidth

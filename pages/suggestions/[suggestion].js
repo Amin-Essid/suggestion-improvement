@@ -2,12 +2,13 @@ import Head from "next/head";
 import Link from "next/link";
 import { Container, Paper } from "@material-ui/core";
 import { Buttons } from "../../components/buttons";
-
+import { BottomNavigation } from "@material-ui/core";
 import { getSuggestion } from "../../fetchData/getSuggestion";
 import { getUserData } from "../../fetchData/getUserData";
 import Header from "../../components/header";
 import { useUser } from "../../context/userContext";
 import Comments from "../../components/comments";
+import Images from "../../components/images";
 import Footer from "../../components/footer";
 
 export default function SSRPage({ data }) {
@@ -38,7 +39,10 @@ export default function SSRPage({ data }) {
             <div style={{ display: "flex" }}>
               <div>
                 <span
-                  style={{ paddingRight: "10px", textDecoration: "underline" }}
+                  style={{
+                    paddingRight: "10px",
+                    textDecoration: "underline",
+                  }}
                 >
                   {sug.department}
                 </span>
@@ -63,11 +67,12 @@ export default function SSRPage({ data }) {
               >{`Created on ${date} by ${userData.username}`}</p>
             </div>
           </Paper>
-          {/* {user && <CommentField suggestion={suggestion} />} */}
+          <Images sug={sug} />
           <Comments sug={sug} suggestion={suggestion} />
         </Container>
       </main>
       <Footer />
+      {/* <BottomNavigation>bjah e rab ekhdem</BottomNavigation> */}
     </>
   );
 }

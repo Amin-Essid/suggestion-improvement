@@ -5,7 +5,8 @@ export const postSuggestion = async (
   description,
   department,
   category,
-  author
+  author,
+  urlsArray
 ) => {
   const db = firebase.firestore();
   const suggestionsRef = db.collection("posts");
@@ -20,5 +21,6 @@ export const postSuggestion = async (
     commentsIds: [],
     upvotes: 0,
     usersWhoLikedItIds: [],
+    imagesUrl: urlsArray,
   });
 };

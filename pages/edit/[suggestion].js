@@ -192,6 +192,7 @@ export default function EditSuggestion({ data }) {
                     {formError}
                   </Typography>
                 </Grid>
+
                 <Button
                   type="submit"
                   fullWidth
